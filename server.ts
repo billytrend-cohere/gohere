@@ -10,10 +10,10 @@ app.post('/openai/v1/chat/completions', async (req, res) => {
         token: req.headers.authorization.split(" ")[1],
     });
 
-    const [message, ...chatHistory] = req.body.messages.map(({role, content}) => ({ role, message: content }))
+    const [{ message }, ...chatHistory] = req.body.messages.map(({ role, content }) => ({ role, message: content }))
 
     const response = await cohere.chat({
-        message: message.message,
+        message,
         chatHistory
     });
 
@@ -39,5 +39,5 @@ app.post('/openai/v1/chat/completions', async (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`)
 })
